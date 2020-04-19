@@ -35,3 +35,29 @@ export function votePost(id: string, option: VoteOptions) {
         option,
     })
 }
+
+export function getComments(id: string) {
+    return instance.get(`/posts/${id}/comments`)
+}
+
+// new, delete, update, vote
+export function newComment(comment: Comment) {
+    return instance.post(`/comments`, comment)
+}
+
+export function deleteComment(id: string) {
+    return instance.delete(`/comments/${id}`)
+}
+
+export function updateComment(id: string, timestamp: number, body: string) {
+    return instance.put(`/comments/${id}`, {
+        timestamp,
+        body,
+    })
+}
+
+export function voteComment(id: string, option: VoteOptions) {
+    return instance.post(`/comments/${id}`, {
+        option,
+    })
+}
