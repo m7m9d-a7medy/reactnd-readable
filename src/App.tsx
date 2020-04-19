@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
+import { requestGetPosts } from './store/posts/actions'
 
-function App() {
-  return (
-    <div className="App">
-      App
-    </div>
-  );
+const mapStateToProps = (state: any) => state
+const mapDispatchToProps = {
+  getPosts() {
+    return requestGetPosts(null)
+  }
 }
 
-export default App;
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type AppProps = PropsFromRedux & {}
+
+class App extends Component<AppProps, {}> {
+  componentDidMount() {
+    this.props.getPosts()
+  }
+  
+  render() {
+    return (
+      <div>
+        App
+      </div>
+    )
+  }
+}
+
+export default connector(App)
