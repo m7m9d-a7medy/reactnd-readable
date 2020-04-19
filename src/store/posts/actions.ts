@@ -46,7 +46,7 @@ export function requestVotePost(id: string, option: VoteOptions): PostActionType
     }
 }
 
-// Store mutations actions
+// Side effects actions
 export function storePosts(posts: Post[]): PostActionTypes {
     return {
         type: STORE_POSTS,
@@ -58,36 +58,5 @@ export function storePost(post: Post): PostActionTypes {
     return {
         type: STORE_POST,
         post,
-    }
-}
-
-export function saveNewPost(post: Post): PostActionTypes {
-    return {
-        type: NEW_POST,
-        post,
-    }
-}
-
-export function saveDeletePost(id: string): PostActionTypes {
-    return {
-        type: DELETE_POST,
-        id,
-    }
-}
-
-export function saveUpdatePost(id: string, title: string, body: string): PostActionTypes {
-    return {
-        type: UPDATE_POST,
-        id,
-        title,
-        body,
-    }
-}
-
-export function saveVotePost(id: string, option: VoteOptions): PostActionTypes {
-    return {
-        type: VOTE_POST,
-        id,
-        option,
     }
 }

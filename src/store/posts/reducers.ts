@@ -18,7 +18,7 @@ import {
 const initialState: PostsState = []
 
 function storePosts(state: PostsState, action: StorePostsAction): PostsState {
-    return action.posts;
+    return action.posts.filter(post => !post.deleted)
 }
 
 function storePost(state: PostsState, action: StorePostAction): PostsState {
