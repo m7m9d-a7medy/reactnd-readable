@@ -22,11 +22,15 @@ function storePosts(state: PostsState, action: StorePostsAction): PostsState {
 }
 
 function storePost(state: PostsState, action: StorePostAction): PostsState {
-    return state.map(storedPost => {
-        return storedPost.id !== action.post.id
-            ? storedPost
-            : action.post
-    })
+    if (state.find(p => p.id === action.post.id)) {
+        return state.map(storedPost => {
+            return storedPost.id !== action.post.id
+                ? storedPost
+                : action.post
+        })
+    } else {
+        return state.concat([action.post])
+    }
 }
 
 function newPost(state: PostsState, action: NewPostAction): PostsState {
@@ -66,7 +70,7 @@ export default function posts(
     state = initialState,
     action: PostActionTypes
 ): PostsState {
-    switch(action.type) {
+    switch (action.type) {
         case STORE_POSTS:
             return storePosts(state, action)
         case STORE_POST:

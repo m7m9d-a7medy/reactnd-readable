@@ -1,35 +1,38 @@
-import { Post, PostActionTypes, VoteOptions, GET_POSTS, STORE_POSTS, GET_POST, NEW_POST, DELETE_POST, UPDATE_POST, VOTE_POST, STORE_POST } from './types'
+import { Post, PostActionTypes, VoteOptions, GET_POSTS, STORE_POSTS, GET_POST, PROCESS_NEW_POST, NEW_POST, DELETE_POST, UPDATE_POST, VOTE_POST, STORE_POST } from './types'
 
 // API call actions, handled by the sagas
-export function requestGetPosts(category: null | string): PostActionTypes {
+export function getPosts(category: null | string): PostActionTypes {
     return {
         type: GET_POSTS,
         category,
     }
 }
 
-export function requestGetPost(id: string): PostActionTypes {
+export function getPost(id: string): PostActionTypes {
     return {
         type: GET_POST,
         id,
     }
 }
 
-export function requestNewPost(post: Post): PostActionTypes {
+export function processNewPost(author: string, body: string, category: string, title: string): PostActionTypes {
     return {
-        type: NEW_POST,
-        post,
+        type: PROCESS_NEW_POST,
+        author,
+        body,
+        category,
+        title
     }
 }
 
-export function requestDeletePost(id: string): PostActionTypes {
+export function deletePost(id: string): PostActionTypes {
     return {
         type: DELETE_POST,
         id,
     }
 }
 
-export function requestUpdatePost(id: string, title: string, body: string): PostActionTypes {
+export function updatePost(id: string, title: string, body: string): PostActionTypes {
     return {
         type: UPDATE_POST,
         id,
@@ -38,7 +41,7 @@ export function requestUpdatePost(id: string, title: string, body: string): Post
     }
 }
 
-export function requestVotePost(id: string, option: VoteOptions): PostActionTypes {
+export function votePost(id: string, option: VoteOptions): PostActionTypes {
     return {
         type: VOTE_POST,
         id,

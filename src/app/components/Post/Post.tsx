@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { Post as PostType, PostsState } from '../../../store/posts/types'
-import { requestGetPost } from '../../../store/posts/actions'
 
 const mapStateToProps = (state: any, props: any) => {
     const post: PostType | undefined = (state.posts as PostsState).find(post => post.id === props.id)
@@ -10,11 +9,7 @@ const mapStateToProps = (state: any, props: any) => {
     }
 }
 
-const mapDispatchToProps = {
-    getPosts(id: string) {
-        return requestGetPost(id)
-    }
-}
+const mapDispatchToProps = {}
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 

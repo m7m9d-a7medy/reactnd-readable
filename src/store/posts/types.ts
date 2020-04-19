@@ -13,6 +13,7 @@ export type PostsState = Post[]
 
 export const GET_POSTS = 'GET_POSTS'
 export const NEW_POST = 'NEW_POST'
+export const PROCESS_NEW_POST = 'PROCESS_NEW_POST'
 export const GET_POST = 'GET_POST'
 export const VOTE_POST = 'VOTE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
@@ -33,6 +34,14 @@ export interface StorePostsAction {
 export interface NewPostAction {
     type: typeof NEW_POST
     post: Post
+}
+
+export interface ProcessNewPostAction {
+    type: typeof PROCESS_NEW_POST
+    author: string
+    body: string
+    category: string
+    title: string
 }
 
 export interface GetPostAction {
@@ -65,4 +74,4 @@ export interface DeletePostAction {
     id: string
 }
 
-export type PostActionTypes = DeletePostAction | GetPostsAction | GetPostAction | NewPostAction | VotePostAction | UpdatePostAction | StorePostsAction | StorePostAction
+export type PostActionTypes = DeletePostAction | GetPostsAction | GetPostAction | NewPostAction | VotePostAction | UpdatePostAction | StorePostsAction | StorePostAction | ProcessNewPostAction
