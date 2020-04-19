@@ -1,36 +1,35 @@
-// src/store/chat/actions.ts
+import { Post, PostActionTypes, VoteOptions, GET_POSTS, STORE_POSTS, GET_POST, NEW_POST, DELETE_POST, UPDATE_POST, VOTE_POST, STORE_POST } from './types'
 
-import { Post, PostActionTypes, VoteOptions, GET_POSTS, GET_POST, NEW_POST, DELETE_POST, UPDATE_POST, VOTE_POST } from './types'
-
-export function getPosts(category: null | string): PostActionTypes {
+// API call actions, handled by the sagas
+export function requestGetPosts(category: null | string): PostActionTypes {
     return {
         type: GET_POSTS,
         category,
     }
 }
 
-export function getPost(id: string): PostActionTypes {
+export function requestGetPost(id: string): PostActionTypes {
     return {
         type: GET_POST,
         id,
     }
 }
 
-export function newPost(post: Post): PostActionTypes {
+export function requestNewPost(post: Post): PostActionTypes {
     return {
         type: NEW_POST,
         post,
     }
 }
 
-export function deletePost(id: string): PostActionTypes {
+export function requestDeletePost(id: string): PostActionTypes {
     return {
         type: DELETE_POST,
         id,
     }
 }
 
-export function updatePost(id: string, title: string, body: string): PostActionTypes {
+export function requestUpdatePost(id: string, title: string, body: string): PostActionTypes {
     return {
         type: UPDATE_POST,
         id,
@@ -39,7 +38,53 @@ export function updatePost(id: string, title: string, body: string): PostActionT
     }
 }
 
-export function votePost(id: string, option: VoteOptions): PostActionTypes {
+export function requestVotePost(id: string, option: VoteOptions): PostActionTypes {
+    return {
+        type: VOTE_POST,
+        id,
+        option,
+    }
+}
+
+// Store mutations actions
+export function storePosts(posts: Post[]): PostActionTypes {
+    return {
+        type: STORE_POSTS,
+        posts,
+    }
+}
+
+export function storePost(post: Post): PostActionTypes {
+    return {
+        type: STORE_POST,
+        post,
+    }
+}
+
+export function saveNewPost(post: Post): PostActionTypes {
+    return {
+        type: NEW_POST,
+        post,
+    }
+}
+
+export function saveDeletePost(id: string): PostActionTypes {
+    return {
+        type: DELETE_POST,
+        id,
+    }
+}
+
+export function saveUpdatePost(id: string, title: string, body: string): PostActionTypes {
+    return {
+        type: UPDATE_POST,
+        id,
+        title,
+        body,
+    }
+}
+
+export function saveVotePost(id: string, option: VoteOptions): PostActionTypes {
     return {
         type: VOTE_POST,
         id,

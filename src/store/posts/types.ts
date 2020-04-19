@@ -17,40 +17,52 @@ export const GET_POST = 'GET_POST'
 export const VOTE_POST = 'VOTE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const STORE_POSTS = 'STORE_POSTS'
+export const STORE_POST = 'STORE_POST'
 
-interface GetPostsAction {
+export interface GetPostsAction {
     type: typeof GET_POSTS
     category: null | string
 }
 
-interface NewPostAction {
+export interface StorePostsAction {
+    type: typeof STORE_POSTS
+    posts: Post[]
+}
+
+export interface NewPostAction {
     type: typeof NEW_POST
     post: Post
 }
 
-interface GetPostAction {
+export interface GetPostAction {
     type: typeof GET_POST
     id: string
 }
 
+export interface StorePostAction {
+    type: typeof STORE_POST
+    post: Post
+}
+
 export type VoteOptions = 'upVote' | 'downVote'
 
-interface VotePostAction {
+export interface VotePostAction {
     type: typeof VOTE_POST
     id: string
     option: VoteOptions
 }
 
-interface UpdatePostAction {
+export interface UpdatePostAction {
     type: typeof UPDATE_POST
     id: string
     title: string
     body: string
 }
 
-interface DeletePostAction {
+export interface DeletePostAction {
     type: typeof DELETE_POST
     id: string
 }
 
-export type PostActionTypes = DeletePostAction | GetPostsAction | GetPostAction | NewPostAction | VotePostAction | UpdatePostAction
+export type PostActionTypes = DeletePostAction | GetPostsAction | GetPostAction | NewPostAction | VotePostAction | UpdatePostAction | StorePostsAction | StorePostAction
