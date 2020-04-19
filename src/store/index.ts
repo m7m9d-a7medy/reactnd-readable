@@ -1,8 +1,8 @@
-import { combineReducers, createStore } from 'redux'
-import posts from './posts/reducers'
+import { createStore } from 'redux'
+import reducers from './reducers'
+import middleware from './middleware'
+import { runSagas } from './sagas'
 
-const store = createStore(
-    combineReducers({
-        posts,
-    })
-)
+export default createStore(reducers, middleware)
+
+runSagas()
