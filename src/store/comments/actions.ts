@@ -24,11 +24,12 @@ export function requestVoteComment(id: string, option: VoteOptions): CommentActi
     }
 }
 
-export function requestUpdateComment(id: string, body: string): CommentActionTypes {
+export function requestUpdateComment(id: string, timestamp: number, body: string): CommentActionTypes {
     return {
         type: UPDATE_COMMENT,
         id,
         body,
+        timestamp,
     }
 }
 

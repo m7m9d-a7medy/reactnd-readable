@@ -41,6 +41,7 @@ export interface UpdateCommentAction {
     type: typeof UPDATE_COMMENT
     id: string
     body: string
+    timestamp: number
 }
 
 export interface DeleteCommentAction {
