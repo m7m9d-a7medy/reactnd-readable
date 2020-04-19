@@ -7,7 +7,7 @@ const instance: AxiosInstance = axios.create({
     headers
 })
 
-export function getPosts(category: string): Promise<AxiosResponse<Post[]>> {
+export function getPosts(category: string | null): Promise<AxiosResponse<Post[]>> {
     return instance.get(`${category ? '/' + category : ''}/posts`)
 }
 
