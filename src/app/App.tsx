@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { requestGetPosts } from './store/posts/actions'
+import { requestGetPosts } from '../store/posts/actions'
 
 const mapStateToProps = (state: any) => state
 const mapDispatchToProps = {
