@@ -2,20 +2,11 @@ import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { getPosts } from '../store/posts/actions'
 import { getCategories } from '../store/categories/actions'
-import { State } from '../store/types'
-import { getComments } from '../store/comments/actions'
 import { Switch, Route, BrowserRouterProps } from 'react-router-dom'
 import Home from './routes/Home'
 import NewPost from './components/NewPost/NewPost'
 import EditPost from './components/EditPost/EditPost'
 import Post from './components/Post/Post'
-
-const mapStateToProps = (state: State, props: any) => {
-  return {
-    postIds: state.posts?.map(p => p.id),
-    commentIds: state.comments?.map(p => p.id)
-  }
-}
 
 const mapDispatchToProps = {
   getPosts() {
@@ -23,13 +14,10 @@ const mapDispatchToProps = {
   },
   getCategories() {
     return getCategories()
-  },
-  getComments(id: string) {
-    return getComments(id)
   }
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
+const connector = connect(null, mapDispatchToProps)
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
