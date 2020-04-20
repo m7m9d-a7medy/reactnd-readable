@@ -1,5 +1,4 @@
 import { VoteOptions } from './../posts/types';
-import store from '..';
 
 export interface Comment {
     id: string
@@ -15,15 +14,30 @@ export interface Comment {
 export type CommentsState = Comment[]
 
 export const GET_COMMENTS = 'GET_COMMENTS'
+export const GET_COMMENT = 'GET_COMMENT'
+export const PROCESS_NEW_COMMENT = 'PROCESS_NEW_COMMENT'
 export const NEW_COMMENT = 'NEW_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const STORE_COMMENTS = 'STORE_COMMENTS'
+export const STORE_COMMENT = 'STORE_COMMENT'
 
 export interface GetCommentsAction {
     type: typeof GET_COMMENTS
     id: string
+}
+
+export interface GetCommentAction {
+    type: typeof GET_COMMENT
+    commentId: string
+}
+
+export interface ProcessNewComment {
+    type: typeof PROCESS_NEW_COMMENT
+    body: string
+    author: string
+    parentId: string
 }
 
 export interface NewCommentAction {
@@ -54,4 +68,9 @@ export interface StoreCommentsAction {
     comments: CommentsState
 }
 
-export type CommentActionTypes = GetCommentsAction | NewCommentAction | UpdateCommentAction | VoteCommentAction | DeleteCommentAction | StoreCommentsAction
+export interface StoreCommentAction {
+    type: typeof STORE_COMMENT
+    comment: Comment
+}
+
+export type CommentActionTypes = GetCommentsAction | GetCommentAction | ProcessNewComment | NewCommentAction | UpdateCommentAction | VoteCommentAction | DeleteCommentAction | StoreCommentsAction | StoreCommentAction

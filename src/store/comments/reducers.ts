@@ -8,10 +8,12 @@ import {
     UpdateCommentAction,
     VoteCommentAction,
     STORE_COMMENTS,
+    STORE_COMMENT,
     DELETE_COMMENT,
     NEW_COMMENT,
     UPDATE_COMMENT,
-    VOTE_COMMENT
+    VOTE_COMMENT,
+    StoreCommentAction
 } from './types'
 import { DELETE_POST } from '../posts/types'
 
@@ -19,6 +21,18 @@ const initialState: CommentsState = []
 
 function storeComments(state: CommentsState, action: StoreCommentsAction): CommentsState {
     return action.comments.filter(comment => !comment.deleted && !comment.parentDeleted)
+}
+
+function storeComment(state: CommentsState, action: StoreCommentAction): CommentsState {
+    if (state.find(c => c.id === action.comment.id)) {
+        return state.map(storedComment => {
+            return storedComment.id !== action.comment.id
+                ? storedComment
+                : action.comment
+        })
+    } else {
+        return state.concat([action.comment])
+    }
 }
 
 function newComment(state: CommentsState, action: NewCommentAction): CommentsState {
@@ -80,6 +94,8 @@ export default function Comments(
     switch (action.type) {
         case STORE_COMMENTS:
             return storeComments(state, action)
+        case STORE_COMMENT:
+            return storeComment(state, action)
         case NEW_COMMENT:
             return newComment(state, action)
         case DELETE_COMMENT:

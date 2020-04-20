@@ -1,5 +1,5 @@
 import { VoteOptions } from './../posts/types';
-import { Comment, CommentActionTypes, GET_COMMENTS, NEW_COMMENT, VOTE_COMMENT, UPDATE_COMMENT, DELETE_COMMENT, STORE_COMMENTS, CommentsState } from './types';
+import { Comment, CommentActionTypes, GET_COMMENT, GET_COMMENTS, NEW_COMMENT, VOTE_COMMENT, UPDATE_COMMENT, DELETE_COMMENT, STORE_COMMENTS, CommentsState, PROCESS_NEW_COMMENT, STORE_COMMENT } from './types';
 
 
 export function getComments(id: string): CommentActionTypes {
@@ -9,7 +9,23 @@ export function getComments(id: string): CommentActionTypes {
     }
 }
 
-export function newComment(id: string, comment: Comment): CommentActionTypes {
+export function getComment(commentId: string): CommentActionTypes {
+    return {
+        type: GET_COMMENT,
+        commentId,
+    }
+}
+
+export function processNewComment(body: string, author: string, parentId: string): CommentActionTypes {
+    return {
+        type: PROCESS_NEW_COMMENT,
+        author,
+        parentId,
+        body,
+    }
+}
+
+export function newComment(comment: Comment): CommentActionTypes {
     return {
         type: NEW_COMMENT,
         comment,
@@ -44,5 +60,12 @@ export function storeComments(id: string, comments: CommentsState): CommentActio
     return {
         type: STORE_COMMENTS,
         comments,
+    }
+}
+
+export function storeComment(comment: Comment): CommentActionTypes {
+    return {
+        type: STORE_COMMENT,
+        comment,
     }
 }
