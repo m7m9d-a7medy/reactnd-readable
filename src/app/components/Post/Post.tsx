@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { Post as PostType, PostsState } from '../../../store/posts/types'
+import { votePost, deletePost } from '../../../store/posts/actions'
 
 const mapStateToProps = (state: any, props: any) => {
     const post: PostType | undefined = (state.posts as PostsState).find(post => post.id === props.id)
@@ -9,7 +10,17 @@ const mapStateToProps = (state: any, props: any) => {
     }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+    onUpvote(id: string) {
+        return votePost(id, 'upVote')
+    },
+    onDownvote(id: string) {
+        return votePost(id, 'downVote')
+    },
+    onDelete(id: string) {
+        return deletePost(id)
+    }
+}
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
@@ -22,6 +33,7 @@ const Post = (props: Props) => {
     return (
         <div>
             <h2>{title}</h2>
+            <p>{id}</p>
             <div>
                 <p>{author}</p>
                 <p>{category}</p>
@@ -30,6 +42,11 @@ const Post = (props: Props) => {
                 <p>{deleted}</p>
             </div>
             <p>{body}</p>
+            <div>
+                <button onClick={() => props.onUpvote(id)}>Upvote</button>
+                <button onClick={() => props.onDownvote(id)}>Downvote</button>
+                <button onClick={() => props.onDelete(id)}>Delete</button>
+            </div>
         </div>
     )
 }
