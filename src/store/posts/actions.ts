@@ -15,6 +15,13 @@ export function getPost(id: string): PostActionTypes {
     }
 }
 
+export function newPost(post: Post): PostActionTypes {
+    return {
+        type: NEW_POST,
+        post,
+    }
+}
+
 export function processNewPost(author: string, body: string, category: string, title: string): PostActionTypes {
     return {
         type: PROCESS_NEW_POST,
