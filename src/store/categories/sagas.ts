@@ -6,7 +6,7 @@ import { storeCategories } from './actions';
 function* getCategoriesSaga(action: GetCategoriesAction) {
     const { data } = yield getCategories()
     console.log(data.categories)
-    yield put(storeCategories(data.categories))
+    yield put(storeCategories(data.categories as CategoriesState))
 }
 
 export default function* categoriesSaga() {
