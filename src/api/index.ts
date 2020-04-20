@@ -1,6 +1,7 @@
 import axios, { AxiosResponse, AxiosInstance } from 'axios'
 import { baseURL, headers } from './config'
 import { Post, VoteOptions } from '../store/posts/types'
+import { Comment } from '../store/comments/types'
 
 const instance: AxiosInstance = axios.create({
     baseURL,
@@ -44,6 +45,10 @@ function getComments(id: string) {
     return instance.get(`/posts/${id}/comments`)
 }
 
+function getComment(commentId: string) {
+    return instance.get(`/comments/${commentId}`)
+}
+
 // new, delete, update, vote
 function newComment(comment: Comment) {
     return instance.post(`/comments`, comment)
@@ -75,6 +80,7 @@ const API = {
     votePost,
     deletePost,
     getComments,
+    getComment,
     newComment,
     deleteComment,
     updateComment,
