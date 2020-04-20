@@ -7,61 +7,78 @@ const instance: AxiosInstance = axios.create({
     headers
 })
 
-export function getCategories() {
+function getCategories() {
     return instance.get(`/categories`)
 }
 
-export function getPosts(category: string | null): Promise<AxiosResponse<Post[]>> {
+function getPosts(category: string | null): Promise<AxiosResponse<Post[]>> {
     return instance.get(`${category ? '/' + category : ''}/posts`)
 }
 
-export function getPost(id: string): Promise<AxiosResponse<Post>> {
+function getPost(id: string): Promise<AxiosResponse<Post>> {
     return instance.get(`/posts/${id}`)
 }
 
-export function newPost(post: Post) {
+function newPost(post: Post) {
     return instance.post(`/posts`, post)
 }
 
-export function deletePost(id: string) {
+function deletePost(id: string) {
     return instance.delete(`/posts/${id}`)
 }
 
-export function updatePost(id: string, title: string, body: string) {
+function updatePost(id: string, title: string, body: string) {
     return instance.put(`/posts/${id}`, {
         title,
         body,
     })
 }
 
-export function votePost(id: string, option: VoteOptions) {
+function votePost(id: string, option: VoteOptions) {
     return instance.post(`/posts/${id}`, {
         option,
     })
 }
 
-export function getComments(id: string) {
+function getComments(id: string) {
     return instance.get(`/posts/${id}/comments`)
 }
 
 // new, delete, update, vote
-export function newComment(comment: Comment) {
+function newComment(comment: Comment) {
     return instance.post(`/comments`, comment)
 }
 
-export function deleteComment(id: string) {
+function deleteComment(id: string) {
     return instance.delete(`/comments/${id}`)
 }
 
-export function updateComment(id: string, timestamp: number, body: string) {
+function updateComment(id: string, timestamp: number, body: string) {
     return instance.put(`/comments/${id}`, {
         timestamp,
         body,
     })
 }
 
-export function voteComment(id: string, option: VoteOptions) {
+function voteComment(id: string, option: VoteOptions) {
     return instance.post(`/comments/${id}`, {
         option,
     })
 }
+
+const API = {
+    getCategories,
+    getPosts,
+    getPost,
+    newPost,
+    updatePost,
+    votePost,
+    deletePost,
+    getComments,
+    newComment,
+    deleteComment,
+    updateComment,
+    voteComment
+}
+
+export default API
