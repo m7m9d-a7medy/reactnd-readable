@@ -39,15 +39,18 @@ function* processNewPostSaga(action: ProcessNewPostAction) {
     }
 
     const { data } = yield API.newPost(post)
+    console.log(data)
     yield put(storePost(post))
 }
 
 function* votePostSaga(action: VotePostAction) {
     const { data } = yield API.votePost(action.id, action.option)
+    console.log(data)
 }
 
 function* deletePostSaga(action: DeletePostAction) {
     const { data } = yield API.deletePost(action.id)
+    console.log(data)
 }
 
 function* updatePostSaga(action: UpdatePostAction) {
