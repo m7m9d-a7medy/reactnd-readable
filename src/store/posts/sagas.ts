@@ -1,5 +1,5 @@
 import { v1 as uuid } from 'uuid'
-import { ProcessNewPostAction, Post, PROCESS_NEW_POST, VOTE_POST, VotePostAction, DeletePostAction, DELETE_POST, GET_POST, GetPostAction } from './types';
+import { ProcessNewPostAction, Post, PROCESS_NEW_POST, VOTE_POST, VotePostAction, DeletePostAction, DELETE_POST, GET_POST, GetPostAction, UpdatePostAction, UPDATE_POST } from './types';
 
 import { put, takeEvery } from 'redux-saga/effects'
 import API from '../../api'
@@ -50,10 +50,15 @@ function* deletePostSaga(action: DeletePostAction) {
     const { data } = yield API.deletePost(action.id)
 }
 
+function* updatePostSaga(action: UpdatePostAction) {
+    yield API.updatePost(action.id, action.title, action.body)
+}
+
 export default function* postsSaga() {
     yield takeEvery(GET_POSTS, getPostsSaga)
     yield takeEvery(GET_POST, getPostSaga)
     yield takeEvery(PROCESS_NEW_POST, processNewPostSaga)
     yield takeEvery(VOTE_POST, votePostSaga)
     yield takeEvery(DELETE_POST, deletePostSaga)
+    yield takeEvery(UPDATE_POST, updatePostSaga)
 }
