@@ -11,23 +11,26 @@ type BaseProps = {
 }
 
 const mapStateToProps = (state: State, props: BaseProps) => {
-    const posts = state.posts?.filter(p => p.category === props.category)
-        .sort((a: PostType, b: PostType) => {
-            switch (props.orderBy) {
-                case 'date-asc':
-                    return a.timestamp - b.timestamp
-                case 'date-desc':
-                    return b.timestamp - a.timestamp
-                case 'votes-asc':
-                    return a.voteScore - b.voteScore
-                case 'votes-desc':
-                    return b.voteScore - a.voteScore
-                default:
-                    return 0
-            }
-        })
+    const posts = props.category !== 'all'
+        ? state.posts?.filter(p => p.category === props.category)
+        : state.posts
 
-    return { posts, }
+    const sortedPosts = posts?.sort((a: PostType, b: PostType) => {
+        switch (props.orderBy) {
+            case 'date-asc':
+                return b.timestamp - a.timestamp
+            case 'date-desc':
+                return a.timestamp - b.timestamp
+            case 'votes-asc':
+                return b.voteScore - a.voteScore
+            case 'votes-desc':
+                return a.voteScore - b.voteScore
+            default:
+                return 0
+        }
+    })
+
+    return { sortedPosts, }
 }
 
 const connector = connect(mapStateToProps)
@@ -40,7 +43,7 @@ const PostList = (props: Props) => {
     return (
         <Fragment>
             {
-                props.posts?.map(({ id }) => (
+                props.sortedPosts?.map(({ id }) => (
                     <PostCard
                         key={id}
                         id={id}
@@ -49,7 +52,6 @@ const PostList = (props: Props) => {
             }
         </Fragment>
     )
-
 }
 
 export default connector(PostList)

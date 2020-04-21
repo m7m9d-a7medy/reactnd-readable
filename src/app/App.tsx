@@ -54,7 +54,7 @@ const App = (props: AppProps) => {
             path='/posts/:id'
             component={PostView}
           />
-          <Redirect to='posts/#all' />
+          <Redirect to='/posts#all' />
         </Switch>
       </Layout>
     </Fragment>
