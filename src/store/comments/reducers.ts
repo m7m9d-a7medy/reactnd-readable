@@ -52,7 +52,7 @@ function updateComment(state: CommentsState, action: UpdateCommentAction): Comme
 
 function deleteComment(state: CommentsState, action: DeleteCommentAction): CommentsState {
     return state.map(storedComment => {
-        return storedComment.parentId !== action.id
+        return storedComment.id !== action.id
             ? storedComment
             : {
                 ...storedComment,
