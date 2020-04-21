@@ -9,8 +9,6 @@ type Props = RouteComponentProps & BaseProps
 
 const Posts = (props: Props) => {
     const hash = props.location.hash.slice(1)
-    console.log('Posts params', hash)
-
     const [orderParams, setOrderParams] = useState<OrderOptions>('votes-asc')
 
     useEffect(() => {
