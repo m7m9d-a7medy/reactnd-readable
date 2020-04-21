@@ -9,6 +9,7 @@ import { getComments } from '../../../store/comments/actions'
 import Controls from '../../components/Controls/Controls'
 import { Post as PostType } from '../../../store/posts/types'
 import { emptyPost } from '../../common/helpers'
+import NewComment from '../../components/NewComment/NewComment'
 
 type BaseProps = {}
 
@@ -86,6 +87,7 @@ const PostView = (props: Props) => {
                 </div>
                 <div className='card-content'>
                     <p>Comments</p>
+                    <NewComment parentId={id}/>
                     <CommentList parentId={id} />
                 </div>
             </div>
