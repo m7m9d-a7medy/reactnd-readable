@@ -1,8 +1,8 @@
 import { v1 as uuid } from 'uuid'
-import { Comment, GET_COMMENT, GET_COMMENTS, GetCommentAction,GetCommentsAction, CommentsState, VoteCommentAction, VOTE_COMMENT, UpdateCommentAction, DeleteCommentAction, DELETE_COMMENT, UPDATE_COMMENT, PROCESS_NEW_COMMENT, ProcessNewComment } from './types';
+import { Comment, GET_COMMENT, GET_COMMENTS, GetCommentAction, GetCommentsAction, CommentsState, VoteCommentAction, VOTE_COMMENT, UpdateCommentAction, DeleteCommentAction, DELETE_COMMENT, UPDATE_COMMENT, PROCESS_NEW_COMMENT, ProcessNewComment } from './types';
 import { takeEvery, put } from 'redux-saga/effects';
 import API from '../../api';
-import { storeComments, storeComment } from './actions'
+import { storeComments, storeComment, newComment } from './actions'
 
 function* getCommentsSaga(action: GetCommentsAction) {
     const { data } = yield API.getComments(action.id)
@@ -43,8 +43,9 @@ function* newCommentSaga(action: ProcessNewComment) {
         voteScore: 1
     }
 
-    const {data} = yield API.newComment(comment)
+    const { data } = yield API.newComment(comment)
     console.log(data)
+    yield put(newComment(data as Comment))
 }
 
 export default function* categoriesSaga() {

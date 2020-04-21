@@ -3,7 +3,6 @@ import { connect, ConnectedProps } from 'react-redux'
 import { processNewPost } from '../../../store/posts/actions'
 import { CategoriesState } from '../../../store/categories/types'
 import { State } from '../../../store/types'
-import { getCategories } from '../../../store/categories/actions'
 import { RouteComponentProps } from 'react-router'
 
 type BaseProps = {}
@@ -17,9 +16,6 @@ const mapStateToProps = (state: State, props: BaseProps) => {
 const mapDispatchToProps = {
     onNewPost(author: string, category: string, body: string, title: string) {
         return processNewPost(author, body, category, title)
-    },
-    onLoad() {
-        return getCategories()
     }
 }
 
@@ -30,7 +26,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & RouteComponentProps & {}
 
 const Post = (props: Props) => {
-    const { categories, onLoad, onNewPost, history } = props
+    const { categories, onNewPost, history } = props
     const [title, setTitle] = useState<string>('')
     const [body, setBody] = useState<string>('')
     const [author, setAuthor] = useState<string>('')
@@ -39,14 +35,13 @@ const Post = (props: Props) => {
     useEffect(() => {
         const elements = document.querySelectorAll('select')
         const instances = M.FormSelect.init(elements)
-        onLoad()
 
         return () => {
             for (let instance of instances) {
                 instance.destroy()
             }
         }
-    }, [onLoad])
+    }, [])
 
     function handleSubmit(e: SyntheticEvent) {
         e.preventDefault()
