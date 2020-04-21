@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { State } from '../../../store/types'
-import { votePost, updatePost, deletePost, getPost } from '../../../store/posts/actions'
+import { votePost, deletePost, getPost } from '../../../store/posts/actions'
 import { connect, ConnectedProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import { RouteComponentProps } from 'react-router'
@@ -31,9 +31,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: RouteComponentProps) => {
             dispatch(getPost(postId))
             dispatch(getComments(postId))
         },
-        onUpdate(title: string, body: string) {
-            dispatch(updatePost(postId, title, body))
-        },
         onDelete() {
             dispatch(deletePost(postId))
         }
@@ -47,14 +44,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = BaseProps & PropsFromRedux & RouteComponentProps
 
 const PostView = (props: Props) => {
-    const { onLoad, post, onDownvote, onUpvote, onUpdate, onDelete } = props
+    const { onLoad, post, onDownvote, onUpvote, onDelete, history } = props
     const id = (props.match.params as any).id
     const { body, author, timestamp, voteScore, title } = post
-    const [editing, setEditing] = useState(false)
 
-    const editHandler = (editedTitle: string, editedBody: string) => {
-        setEditing(false)
-        onUpdate(editedTitle, editedBody)
+    const editHandler = () => {
+        history.push(`/posts/edit/${id}`)
+    }
+
+    const deleteHandler = () => {
+        history.push(`/posts/#${post.category}`)
+        onDelete()
     }
 
     useEffect(() => {
@@ -80,8 +80,8 @@ const PostView = (props: Props) => {
                     <Controls
                         upvoteHandler={onUpvote}
                         downvoteHandler={onDownvote}
-                        editHandler={() => setEditing(true)}
-                        deleteHandler={onDelete}
+                        editHandler={editHandler}
+                        deleteHandler={deleteHandler}
                     />
                 </div>
                 <div className='card-content'>

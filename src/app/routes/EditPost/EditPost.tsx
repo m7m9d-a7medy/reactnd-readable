@@ -5,13 +5,11 @@ import { State } from '../../../store/types'
 import { Post as PostType } from '../../../store/posts/types'
 import { RouteComponentProps } from 'react-router'
 
-type BaseProps = {
-    id: string
-}
+type BaseProps = {}
 
-const mapStateToProps = (state: State, props: BaseProps) => {
+const mapStateToProps = (state: State, props: RouteComponentProps) => {
     return {
-        post: state.posts?.find(p => p.id === props.id)
+        post: state.posts?.find(p => p.id === (props.match.params as any).id)
     }
 }
 
@@ -28,7 +26,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & RouteComponentProps & BaseProps
 
 const Post = (props: Props) => {
-    const { post, onUpdatePost } = props
+    const { post, onUpdatePost, history } = props
     const { title, body, id } = post as PostType
 
     const [updatedTitle, setUpdatedTitle] = useState(title)
@@ -38,6 +36,7 @@ const Post = (props: Props) => {
         e.preventDefault()
 
         onUpdatePost(id, updatedTitle, updatedBody)
+        history.push(`/posts/${id}`)
     }
 
     return (
@@ -47,29 +46,29 @@ const Post = (props: Props) => {
                 <div className="row">
                     <div className="input-field col s12">
                         <input
+                            placeholder='Title'
                             id="title"
                             type="text"
                             className="validate"
                             required
-                            value={title}
+                            value={updatedTitle}
                             onChange={e => setUpdatedTitle(e.target.value)}
                         />
-                        <label htmlFor="title">Title</label>
                     </div>
                 </div>
                 <div className="row">
                     <div className="input-field col s12">
                         <textarea
+                            placeholder='Post'
                             id="body"
                             className="materialize-textarea"
                             style={{
                                 height: '15rem'
                             }}
-                            value={body}
+                            value={updatedBody}
                             onChange={e => setUpdatedBody(e.target.value)}
                             required
                         ></textarea>
-                        <label htmlFor="body">Post</label>
                     </div>
                 </div>
                 <div className='row'>
