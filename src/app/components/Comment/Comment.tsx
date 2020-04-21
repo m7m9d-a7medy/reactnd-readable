@@ -1,55 +1,82 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { Comment as CommentType } from '../../../store/comments/types'
-import { voteComment, deleteComment } from '../../../store/comments/actions'
+import { voteComment, deleteComment, updateComment } from '../../../store/comments/actions'
 import { State } from '../../../store/types'
+import { Dispatch } from 'redux'
+import Controls from '../Controls/Controls'
+import EditComment from '../EditComment/EditComment'
 
-const mapStateToProps = (state: State, props: any) => {
+type BaseProps = {
+    id: string
+}
+
+const mapStateToProps = (state: State, props: BaseProps) => {
     const comment: CommentType | undefined = state.comments?.find(comment => comment.id === props.id)
     return {
-        ...(comment as CommentType)
+        comment: comment as CommentType
     }
 }
 
-const mapDispatchToProps = {
-    onUpvote(id: string) {
-        return voteComment(id, 'upVote')
+const mapDispatchToProps = (dispatch: Dispatch, props: BaseProps) => ({
+    onUpvote() {
+        dispatch(voteComment(props.id, 'upVote'))
     },
-    onDownvote(id: string) {
-        return voteComment(id, 'downVote')
+    onDownvote() {
+        dispatch(voteComment(props.id, 'downVote'))
     },
-    onDelete(id: string) {
-        return deleteComment(id)
+    onDelete() {
+        dispatch(deleteComment(props.id))
+    },
+    onUpdate(body: string, ts: number) {
+        dispatch(updateComment(props.id, ts, body))
     }
-}
+})
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-type Props = PropsFromRedux & {
-    parentId: string
-}
+type Props = PropsFromRedux & BaseProps
 
 const Comment = (props: Props) => {
+    const { comment, onDelete, onDownvote, onUpvote, onUpdate } = props
+    const { body, author, timestamp, voteScore } = comment
+    const [editing, setEditing] = useState(false)
 
-    const { id, timestamp, body, author, parentDeleted, parentId, voteScore, deleted } = props
+    const editHandler = (editedBody: string) => {
+        setEditing(false)
+        onUpdate(editedBody, new Date().getTime())
+    }
+
+    const editElement = editing && (
+        <div className='card-action'>
+            <EditComment
+                onSubmit={editHandler}
+                comment={comment}
+            />
+        </div>
+    )
+
     return (
-        <div>
-            <h2>{parentId}</h2>
-            <p>{id} {parentDeleted ? 'exists' : "doesn't exist"}</p>
-            <div>
-                <p>{author}</p>
-                <p>{voteScore}</p>
-                <p>{new Date(timestamp).toString()}</p>
-                <p>{deleted}</p>
+        <div className='card z-depth-1'>
+            <div className='card-content'>
+                <p className='card-title'>{body}</p>
+                <p>
+                    <span>By {author}</span>
+                    <span>, at {new Date(timestamp).toString()}</span>
+                </p>
+                <p>Votes: {voteScore}</p>
             </div>
-            <p>{body}</p>
-            <div>
-                <button onClick={() => props.onUpvote(id)}>Upvote</button>
-                <button onClick={() => props.onDownvote(id)}>Downvote</button>
-                <button onClick={() => props.onDelete(id)}>Delete</button>
+            <div className='card-action'>
+                <Controls
+                    upvoteHandler={onUpvote}
+                    downvoteHandler={onDownvote}
+                    editHandler={() => setEditing(true)}
+                    deleteHandler={onDelete}
+                />
             </div>
+            {editElement}
         </div>
     )
 }
