@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { State } from '../../../store/types'
 import { votePost } from '../../../store/posts/actions'
 import { connect, ConnectedProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import { RouteComponentProps } from 'react-router'
+import CommentList from '../../components/CommentList/CommentList'
+import { getComments } from '../../../store/comments/actions'
 
 type BaseProps = {}
 
@@ -22,6 +24,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: RouteComponentProps) => {
         },
         onDownvote() {
             dispatch(votePost(postId, 'downVote'))
+        },
+        onLoad() {
+            dispatch(getComments(postId))
         }
     }
 }
@@ -33,9 +38,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = BaseProps & PropsFromRedux & RouteComponentProps
 
 const PostView = (props: Props) => {
+    const { onLoad } = props
+    const id = (props.match.params as any).id
+    
+    useEffect(() => {
+        onLoad()
+    }, [onLoad])
+
     return (
         <div>
-            Hello {(props.match.params as any).id}
+            Hello {}
+            <CommentList parentId={id} />
         </div>
     )
 }

@@ -22,6 +22,7 @@ const EditComment = (props: BaseProps) => {
                     <textarea
                         value={editedBody}
                         onChange={e => setEditedBody(e.target.value)}
+                        className="materialize-textarea"
                         required
                     />
                 </div>
