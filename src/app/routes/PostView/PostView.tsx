@@ -10,13 +10,16 @@ import Controls from '../../components/Controls/Controls'
 import { Post as PostType } from '../../../store/posts/types'
 import { emptyPost } from '../../common/helpers'
 import NewComment from '../../components/NewComment/NewComment'
+import { Link } from 'react-router-dom'
 
 type BaseProps = {}
 
 const mapStateToProps = (state: State, props: RouteComponentProps) => {
     const postId = (props.match.params as any).id
+    const post = state.posts?.find(p => p.id === postId)
     return {
-        post: state.posts?.find(p => p.id === postId) as PostType
+        post: post as PostType,
+        exists: post ? true : false
     }
 }
 
@@ -46,7 +49,23 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = BaseProps & PropsFromRedux & RouteComponentProps
 
 const PostView = (props: Props) => {
-    const { onLoad, post, onDownvote, onUpvote, onDelete, history } = props
+    const { onLoad, post, onDownvote, onUpvote, onDelete, history, exists } = props
+
+    useEffect(() => {
+        onLoad()
+    }, [onLoad])
+
+    if (!exists) {
+        return (
+            <div>
+                <h2>Not found</h2>
+                <Link to='/posts#all' className='btn btn-large indigo white-text'>
+                    Go to feed
+                </Link>
+            </div>
+        )
+    }
+
     const { id, body, author, timestamp, voteScore, title } = post ? post : emptyPost
 
     const editHandler = () => {
@@ -57,11 +76,6 @@ const PostView = (props: Props) => {
         history.push(`/posts/#${post.category}`)
         onDelete()
     }
-
-    useEffect(() => {
-        onLoad()
-    }, [onLoad])
-
 
     return (
         <div>
@@ -87,7 +101,7 @@ const PostView = (props: Props) => {
                 </div>
                 <div className='card-content'>
                     <p>Comments</p>
-                    <NewComment parentId={id}/>
+                    <NewComment parentId={id} />
                     <CommentList parentId={id} />
                 </div>
             </div>
