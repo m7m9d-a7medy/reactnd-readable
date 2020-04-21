@@ -6,29 +6,28 @@ import { storeComments, storeComment, newComment } from './actions'
 
 function* getCommentsSaga(action: GetCommentsAction) {
     const { data } = yield API.getComments(action.id)
-    console.log(data)
+
     yield put(storeComments(action.id, data as CommentsState))
 }
 
 function* getCommentSaga(action: GetCommentAction) {
     const { data } = yield API.getComment(action.commentId)
-    console.log(data)
+
     yield put(storeComment(data as Comment))
 }
 
 function* voteCommentSaga(action: VoteCommentAction) {
-    const { data } = yield API.voteComment(action.id, action.option)
-    console.log(data)
+    yield API.voteComment(action.id, action.option)
+
 }
 
 function* deleteCommentSaga(action: DeleteCommentAction) {
-    const { data } = yield API.deleteComment(action.id)
-    console.log(data)
+    yield API.deleteComment(action.id)
+
 }
 
 function* updateCommentSaga(action: UpdateCommentAction) {
-    const { data } = yield API.updateComment(action.id, new Date().getTime(), action.body)
-    console.log(data)
+    yield API.updateComment(action.id, new Date().getTime(), action.body)
 }
 
 function* newCommentSaga(action: ProcessNewComment) {
@@ -44,7 +43,7 @@ function* newCommentSaga(action: ProcessNewComment) {
     }
 
     const { data } = yield API.newComment(comment)
-    console.log(data)
+
     yield put(newComment(data as Comment))
 }
 

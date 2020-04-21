@@ -5,7 +5,6 @@ import { storeCategories } from './actions';
 
 function* getCategoriesSaga(action: GetCategoriesAction) {
     const { data } = yield API.getCategories()
-    console.log(data.categories)
     yield put(storeCategories(data.categories as CategoriesState))
 }
 

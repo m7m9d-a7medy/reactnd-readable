@@ -1,5 +1,5 @@
 import { v1 as uuid } from 'uuid'
-import { ProcessNewPostAction, Post, PROCESS_NEW_POST, VOTE_POST, VotePostAction, DeletePostAction, DELETE_POST, GET_POST, GetPostAction, UpdatePostAction, UPDATE_POST } from './types';
+import { ProcessNewPostAction, Post, PROCESS_NEW_POST, VOTE_POST, VotePostAction, DeletePostAction, DELETE_POST, GET_POST, GetPostAction, UpdatePostAction, UPDATE_POST, PostsState } from './types';
 
 import { put, takeEvery } from 'redux-saga/effects'
 import API from '../../api'
@@ -17,13 +17,12 @@ import {
 function* getPostsSaga(action: GetPostsAction) {
     const { category } = action
     const { data } = yield API.getPosts(category)
-    yield console.log(data)
-    yield put(storePosts(data))
+    yield put(storePosts(data as PostsState))
 }
 
 function* getPostSaga(action: GetPostAction) {
     const { data } = yield API.getPost(action.id)
-    console.log(data)
+
     yield put(storePost(data as Post))
 }
 
@@ -41,18 +40,17 @@ function* processNewPostSaga(action: ProcessNewPostAction) {
     }
 
     const { data } = yield API.newPost(post)
-    console.log(data)
-    yield put(storePost(post))
+
+    yield put(storePost(data as Post))
 }
 
 function* votePostSaga(action: VotePostAction) {
-    const { data } = yield API.votePost(action.id, action.option)
-    console.log(data)
+    yield API.votePost(action.id, action.option)
+
 }
 
 function* deletePostSaga(action: DeletePostAction) {
-    const { data } = yield API.deletePost(action.id)
-    console.log(data)
+    yield API.deletePost(action.id)
 }
 
 function* updatePostSaga(action: UpdatePostAction) {
