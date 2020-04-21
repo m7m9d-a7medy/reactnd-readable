@@ -22,7 +22,9 @@ function* getPostsSaga(action: GetPostsAction) {
 }
 
 function* getPostSaga(action: GetPostAction) {
-    yield API.getPost(action.id)
+    const { data } = yield API.getPost(action.id)
+    console.log(data)
+    yield put(storePost(data as Post))
 }
 
 function* processNewPostSaga(action: ProcessNewPostAction) {
