@@ -9,7 +9,7 @@ type BaseProps = {}
 
 const mapStateToProps = (state: State, props: BaseProps) => {
     return {
-        categories: state.categories as CategoriesState
+        categories: state.categories?.filter(c => c.name !== 'all') as CategoriesState
     }
 }
 

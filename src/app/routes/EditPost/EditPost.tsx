@@ -32,6 +32,8 @@ const Post = (props: Props) => {
     const { post, onUpdatePost, history, exists } = props
     const [updatedTitle, setUpdatedTitle] = useState('')
     const [updatedBody, setUpdatedBody] = useState('')
+    const [updated, setUpdated] = useState(false)
+
     if (!exists) {
         return (
             <div>
@@ -41,12 +43,13 @@ const Post = (props: Props) => {
                 </Link>
             </div>
         )
+    } else if (!updated) {
+        setUpdated(true)
+        setUpdatedBody((post as PostType).body)
+        setUpdatedTitle((post as PostType).title)
     }
 
     const { title, body, id } = post as PostType
-    
-    setUpdatedBody(body)
-    setUpdatedTitle(title)
 
     function handleSubmit(e: SyntheticEvent) {
         e.preventDefault()
@@ -68,6 +71,7 @@ const Post = (props: Props) => {
                             className="validate"
                             required
                             value={updatedTitle}
+                            defaultValue={title}
                             onChange={e => setUpdatedTitle(e.target.value)}
                         />
                     </div>
@@ -82,6 +86,7 @@ const Post = (props: Props) => {
                                 height: '15rem'
                             }}
                             value={updatedBody}
+                            defaultValue={body}
                             onChange={e => setUpdatedBody(e.target.value)}
                             required
                         ></textarea>

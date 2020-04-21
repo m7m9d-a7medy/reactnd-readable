@@ -99,8 +99,10 @@ const PostView = (props: Props) => {
                         deleteHandler={deleteHandler}
                     />
                 </div>
+            </div>
+            <div className='card'>
                 <div className='card-content'>
-                    <p>Comments</p>
+                    <span className='card-title'>Comments</span>
                     <NewComment parentId={id} />
                     <CommentList parentId={id} />
                 </div>

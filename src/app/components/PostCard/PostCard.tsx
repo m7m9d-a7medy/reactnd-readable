@@ -39,7 +39,7 @@ const PostCard = (props: Props) => {
     const { title, author, id } = props
     return (
         <div className='row'>
-            <div className='col m8 offset-m2 s12'>
+            <div className='col s10 offset-s1'>
                 <Link to={`/posts/${id}`}>
                     <div className='card white z-depth-1'>
                         <div className='card-content'>

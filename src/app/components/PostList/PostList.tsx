@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { State } from '../../../store/types'
 import { Post as PostType } from '../../../store/posts/types'
 import { connect, ConnectedProps } from 'react-redux'
@@ -18,9 +18,9 @@ const mapStateToProps = (state: State, props: BaseProps) => {
     const sortedPosts = posts?.sort((a: PostType, b: PostType) => {
         switch (props.orderBy) {
             case 'date-asc':
-                return b.timestamp - a.timestamp
-            case 'date-desc':
                 return a.timestamp - b.timestamp
+            case 'date-desc':
+                return b.timestamp - a.timestamp
             case 'votes-asc':
                 return b.voteScore - a.voteScore
             case 'votes-desc':
@@ -41,16 +41,15 @@ type Props = BaseProps & PropsFromRedux
 
 const PostList = (props: Props) => {
     return (
-        <Fragment>
+        <ul className='collection'>
             {
                 props.sortedPosts?.map(({ id }) => (
-                    <PostCard
-                        key={id}
-                        id={id}
-                    />
+                    <li key={id} className='collection-item'>
+                        <PostCard id={id} />
+                    </li>
                 ))
             }
-        </Fragment>
+        </ul>
     )
 }
 

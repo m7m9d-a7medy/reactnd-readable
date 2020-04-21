@@ -8,12 +8,18 @@ type BaseProps = {}
 type Props = RouteComponentProps & BaseProps
 
 const Posts = (props: Props) => {
-    const hash = props.location.hash.slice(1)
+    const category = props.location.hash ? props.location.hash.slice(1) : 'all'
     const [orderParams, setOrderParams] = useState<OrderOptions>('votes-asc')
 
     useEffect(() => {
         const elements = document.querySelectorAll('select')
-        M.FormSelect.init(elements)
+        const instances = M.FormSelect.init(elements)
+
+        return () => {
+            for (let instance of instances) {
+                instance.destroy()
+            }
+        }
     }, [])
 
     return (
@@ -28,9 +34,12 @@ const Posts = (props: Props) => {
                     </select>
                 </div>
             </div>
-            {
-                <PostList category={hash} orderBy={orderParams} />
-            }
+            <div>
+                <h4>Showing {category}</h4>
+                {
+                    <PostList category={category} orderBy={orderParams} />
+                }
+            </div>
         </div>
     )
 }

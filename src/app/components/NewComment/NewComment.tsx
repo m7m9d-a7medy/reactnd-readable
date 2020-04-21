@@ -28,6 +28,8 @@ const NewComment = (props: Props) => {
     const submitHandler = (e: SyntheticEvent) => {
         e.preventDefault()
         onSubmit(author, body)
+        setAuthor('')
+        setBody('')
     }
 
     return (
@@ -44,17 +46,6 @@ const NewComment = (props: Props) => {
                     />
                     <label htmlFor="author">Author</label>
                 </div>
-                <div className='col s2' style={centeralized}>
-                    <button
-                        className='btn indigo white-text'
-                        type='submit'
-                        style={{
-                            display: 'flex'
-                        }}
-                    >
-                        <i className='material-icons medium'>done</i>
-                    </button>
-                </div>
             </div>
             <div className='row'>
                 <div className='input-field col s10'>
@@ -67,6 +58,20 @@ const NewComment = (props: Props) => {
                         onChange={e => setBody(e.target.value)}
                     />
                     <label htmlFor="author">Comment</label>
+                </div>
+                <div className='col s2' style={centeralized}>
+                    <button
+                        className='btn-floating indigo white-text'
+                        type='submit'
+                        style={{
+                            ...centeralized,
+                            height: '4rem',
+                            width: '4rem',
+                            transform: 'translateY(-75%)',
+                        }}
+                    >
+                        <i className='large material-icons' style={{ fontSize: '2.5rem' }}>done</i>
+                    </button>
                 </div>
             </div>
 

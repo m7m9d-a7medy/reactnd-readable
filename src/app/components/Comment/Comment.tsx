@@ -72,7 +72,7 @@ const Comment = (props: Props) => {
                 <Controls
                     upvoteHandler={onUpvote}
                     downvoteHandler={onDownvote}
-                    editHandler={() => setEditing(true)}
+                    editHandler={() => setEditing(editing => !editing)}
                     deleteHandler={onDelete}
                 />
             </div>
