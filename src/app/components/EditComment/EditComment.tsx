@@ -1,6 +1,6 @@
 import React, { useState, SyntheticEvent } from 'react'
 import { Comment as CommentType } from '../../../store/comments/types'
-import { centeralized } from '../Common/styles'
+import { centeralized } from '../../common/styles'
 
 type BaseProps = {
     comment: CommentType

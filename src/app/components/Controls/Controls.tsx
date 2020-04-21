@@ -1,5 +1,5 @@
 import React from 'react'
-import { centeralized } from '../Common/styles'
+import { centeralized } from '../../common/styles'
 
 type BaseProps = {
     deleteHandler: () => void

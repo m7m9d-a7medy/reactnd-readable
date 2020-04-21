@@ -8,6 +8,7 @@ import CommentList from '../../components/CommentList/CommentList'
 import { getComments } from '../../../store/comments/actions'
 import Controls from '../../components/Controls/Controls'
 import { Post as PostType } from '../../../store/posts/types'
+import { emptyPost } from '../../common/helpers'
 
 type BaseProps = {}
 
@@ -45,8 +46,7 @@ type Props = BaseProps & PropsFromRedux & RouteComponentProps
 
 const PostView = (props: Props) => {
     const { onLoad, post, onDownvote, onUpvote, onDelete, history } = props
-    const id = (props.match.params as any).id
-    const { body, author, timestamp, voteScore, title } = post
+    const { id, body, author, timestamp, voteScore, title } = post ? post : emptyPost
 
     const editHandler = () => {
         history.push(`/posts/edit/${id}`)
