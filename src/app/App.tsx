@@ -4,11 +4,11 @@ import { getPosts } from '../store/posts/actions'
 import { getCategories } from '../store/categories/actions'
 import { Switch, Route, BrowserRouterProps, Redirect } from 'react-router-dom'
 import NewPost from './routes/NewPost/NewPost'
-import EditPost from './components/EditPost/EditPost'
-import Post from './components/PostCard/PostCard'
+import EditPost from './routes/EditPost/EditPost'
 import Head from './components/Head/Head'
 import Layout from './components/Layout/Layout'
 import Posts from './routes/Posts/Posts'
+import PostView from './routes/PostView/PostView'
 
 const mapDispatchToProps = {
   getPosts() {
@@ -52,7 +52,7 @@ const App = (props: AppProps) => {
           />
           <Route
             path='/posts/:id'
-            component={Post}
+            component={PostView}
           />
           <Redirect to='posts/#all' />
         </Switch>
