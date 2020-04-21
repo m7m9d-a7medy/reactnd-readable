@@ -64,7 +64,7 @@ const Comment = (props: Props) => {
                 <p className='card-title'>{body}</p>
                 <p>
                     <span>By {author}</span>
-                    <span>, at {new Date(timestamp).toString()}</span>
+                    <span> at {new Date(timestamp).toLocaleString()}</span>
                 </p>
                 <p>Votes: {voteScore}</p>
             </div>

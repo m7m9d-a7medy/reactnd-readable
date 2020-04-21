@@ -1,4 +1,5 @@
 import React from 'react'
+import { centeralized } from '../Common/styles'
 
 type BaseProps = {
     deleteHandler: () => void
@@ -12,24 +13,24 @@ const Controls = (props: BaseProps) => {
 
     return (
         <div className='row'>
-            <div className='col s3 center-align'>
-                <span className='large material-icons indigo white-text' onClick={upvoteHandler}>
-                    <i>arrow_upward</i>
+            <div className='col s2' style={centeralized}>
+                <span className='btn-floating indigo white-text' onClick={upvoteHandler} style={centeralized}>
+                    <i className='large material-icons'>arrow_upward</i>
                 </span>
             </div>
-            <div className='col s3 center-align'>
-                <span className='large material-icons indigo white-text' onClick={downvoteHandler}>
-                    <i>arrow_downward</i>
+            <div className='col s2' style={centeralized}>
+                <span className='btn-floating indigo white-text' onClick={downvoteHandler} style={centeralized}>
+                    <i className='large material-icons'>arrow_downward</i>
                 </span>
             </div>
-            <div className='col s3 center-align'>
-                <span className='large material-icons indigo white-text' onClick={editHandler}>
-                    <i>edit</i>
+            <div className='col s2' style={centeralized}>
+                <span className='btn-floating indigo white-text' onClick={editHandler} style={centeralized}>
+                    <i className='large material-icons'>edit</i>
                 </span>
             </div>
-            <div className='col s3 center-align'>
-                <span className='large material-icons red darken-1 white-text' onClick={deleteHandler}>
-                    <i>delete</i>
+            <div className='col s2 offset-s4' style={centeralized}>
+                <span className='btn-floating red darken-1 white-text' onClick={deleteHandler} style={centeralized}>
+                    <i className='large material-icons'>delete</i>
                 </span>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, SyntheticEvent } from 'react'
 import { Comment as CommentType } from '../../../store/comments/types'
+import { centeralized } from '../Common/styles'
 
 type BaseProps = {
     comment: CommentType
@@ -26,12 +27,15 @@ const EditComment = (props: BaseProps) => {
                         required
                     />
                 </div>
-                <div className='col s2'>
+                <div className='col s2' style={centeralized}>
                     <button
-                        className='btn material-icons indigo white-text medium'
+                        className='btn indigo white-text'
                         type='submit'
+                        style={{
+                            display: 'flex'
+                        }}
                     >
-                        <i>done</i>
+                        <i className='material-icons medium'>done</i>
                     </button>
                 </div>
             </div>
