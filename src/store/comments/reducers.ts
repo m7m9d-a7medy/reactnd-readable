@@ -45,7 +45,8 @@ function updateComment(state: CommentsState, action: UpdateCommentAction): Comme
             ? storedComment
             : {
                 ...storedComment,
-                body: action.body
+                body: action.body,
+                timestamp: action.timestamp,
             }
     })
 }
