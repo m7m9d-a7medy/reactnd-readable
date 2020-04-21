@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { getPosts } from '../store/posts/actions'
 import { getCategories } from '../store/categories/actions'
 import { Switch, Route, BrowserRouterProps, Redirect } from 'react-router-dom'
-import NewPost from './components/NewPost/NewPost'
+import NewPost from './routes/NewPost/NewPost'
 import EditPost from './components/EditPost/EditPost'
 import Post from './components/PostCard/PostCard'
 import Head from './components/Head/Head'
@@ -39,7 +39,7 @@ const App = (props: AppProps) => {
       <Layout>
         <Switch>
           <Route
-            path='/posts'
+            exact path='/posts'
             component={Posts}
           />
           <Route
