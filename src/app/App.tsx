@@ -2,13 +2,13 @@ import React, { useEffect, Fragment } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { getPosts } from '../store/posts/actions'
 import { getCategories } from '../store/categories/actions'
-import { Switch, Route, BrowserRouterProps } from 'react-router-dom'
-import Home from './routes/Home/Home'
+import { Switch, Route, BrowserRouterProps, Redirect } from 'react-router-dom'
 import NewPost from './components/NewPost/NewPost'
 import EditPost from './components/EditPost/EditPost'
 import Post from './components/Post/Post'
 import Head from './components/Head/Head'
 import Layout from './components/Layout/Layout'
+import Posts from './routes/Posts/Posts'
 
 const mapDispatchToProps = {
   getPosts() {
@@ -39,8 +39,8 @@ const App = (props: AppProps) => {
       <Layout>
         <Switch>
           <Route
-            exact path='/'
-            component={Home}
+            path='/posts'
+            component={Posts}
           />
           <Route
             path='/posts/new'
@@ -51,9 +51,10 @@ const App = (props: AppProps) => {
             component={EditPost}
           />
           <Route
-            path='/posts/view/:id'
+            path='/posts/:id'
             component={Post}
           />
+          <Redirect to='posts/#all' />
         </Switch>
       </Layout>
     </Fragment>

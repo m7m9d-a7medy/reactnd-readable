@@ -14,7 +14,10 @@ const Dropdown = (props: DropdownProps) => {
             {
                 categories.map(({ name, path }) => (
                     <li key={name}>
-                        <NavLink to={`/posts/${path}`}>
+                        <NavLink to={{
+                            pathname: '/posts',
+                            hash: `#${path}`
+                        }}>
                             {name}
                         </NavLink>
                     </li>
