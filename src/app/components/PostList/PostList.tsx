@@ -3,10 +3,11 @@ import { State } from '../../../store/types'
 import { Post as PostType } from '../../../store/posts/types'
 import { connect, ConnectedProps } from 'react-redux'
 import PostCard from '../PostCard/PostCard'
+import { OrderOptions } from './types'
 
 type BaseProps = {
     category: string
-    orderBy: 'date-asc' | 'date-desc' | 'votes-asc' | 'votes-desc'
+    orderBy: OrderOptions
 }
 
 const mapStateToProps = (state: State, props: BaseProps) => {

@@ -1,0 +1,1 @@
+export type OrderOptions = 'date-asc' | 'date-desc' | 'votes-asc' | 'votes-desc'
